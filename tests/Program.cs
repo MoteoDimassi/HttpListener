@@ -12,7 +12,7 @@ class Program
         {
            
             HttpListenerContext context = listener.GetContext();
-            Console.WriteLine(ClientInformation(context));
+            
             
             HttpListenerRequest request = context.Request;
 
@@ -21,7 +21,7 @@ class Program
 
             HttpListenerResponse response = context.Response;
             string responseString;
-            using (StreamReader reader = new StreamReader(@"C:\Users\d.djioev\Desktop\tests\www\index.html"))
+            using (StreamReader reader = new StreamReader(@"..\..\..\www\index.html"))
             {
                 responseString = reader.ReadToEnd();
             }
