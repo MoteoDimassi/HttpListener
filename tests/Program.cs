@@ -10,14 +10,15 @@ class Program
         Console.WriteLine("Listening...");
         while (true)
         {
-           
+
             HttpListenerContext context = listener.GetContext();
-            
-            
+
+
             HttpListenerRequest request = context.Request;
 
             StreamReader sr = new StreamReader(request.InputStream);
-            Console.WriteLine("data" + sr.ReadLine());
+            for (string line = null; line != null; line = sr.ReadLine())
+                Console.WriteLine(line);
 
             HttpListenerResponse response = context.Response;
             string responseString;
@@ -25,7 +26,7 @@ class Program
             {
                 responseString = reader.ReadToEnd();
             }
-            
+
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
             //response.ContentLength64 = buffer.Length;
             //response.StatusCode = (int)HttpStatusCode.OK;
@@ -37,31 +38,11 @@ class Program
         listener.Stop();
 
     }
-    public static string ClientInformation(HttpListenerContext context)
+    static void webControl()
     {
-        System.Security.Principal.IPrincipal? user = context.User;
-        if (user == null)
-        {
-            return "user is null";
-        }
-        System.Security.Principal.IIdentity? id = user.Identity;
-        if (id == null)
-        {
-            return "Client authentication is not enabled for this Web server.";
-        }
 
-        string display;
-        if (id.IsAuthenticated)
-        {
-            display = String.Format("{0} was authenticated using {1}", id.Name,
-                id.AuthenticationType);
-        }
-        else
-        {
-            display = String.Format("{0} was not authenticated", id.Name);
-        }
-        return display;
     }
+
 }
 
 
